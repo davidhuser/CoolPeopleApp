@@ -1,3 +1,5 @@
+package ch.fhnw.coin.coolpeople;
+
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -11,7 +13,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * NameExtractor is the class which tries to extract Names with two different approaches from an input String.
+ * ch.fhnw.coin.coolpeople.NameExtractor is the class which tries to extract Names with two different approaches from an input String.
  *
  * @author      Igor Bosnjak
  * @author      David Huser
@@ -100,7 +102,7 @@ public class NameExtractor {
                             /*
                              * eg. We found a sentence containing the name (token) Dorian.
 							 * This may be John Michael Dorian (or Dan Dorian), so if we find a person called Dorian in our ArrayList, we skip this one.
-							 * If no Person with this name is in the ArrayList, we add it to the list.
+							 * If no ch.fhnw.coin.coolpeople.Person with this name is in the ArrayList, we add it to the list.
 							 * NOTE: name will be used as lastname!
 							 */
                             continue;
@@ -130,8 +132,8 @@ public class NameExtractor {
     /**
      * Getter method for ArrayList personPerDocument
      *
-     * @return ArrayList<Person> The Person Data Structure
-     * @see class Person
+     * @return ArrayList<ch.fhnw.coin.coolpeople.Person> The ch.fhnw.coin.coolpeople.Person Data Structure
+     * @see class ch.fhnw.coin.coolpeople.Person
      */
     public ArrayList<Person> returnPersonArray() {
         return personPerDocument;
@@ -140,7 +142,7 @@ public class NameExtractor {
     /**
      * Checks if a persons already exists in the PersonsList.
      *
-     * @param p Person to check
+     * @param p ch.fhnw.coin.coolpeople.Person to check
      * @return boolean
      */
     private boolean isInPersonList(Person p) {
@@ -153,9 +155,9 @@ public class NameExtractor {
     }
 
     /**
-     * Tries to find a Person with 'name' in its prename or lastname
+     * Tries to find a ch.fhnw.coin.coolpeople.Person with 'name' in its prename or lastname
      *
-     * @param name to find a Person with this name
+     * @param name to find a ch.fhnw.coin.coolpeople.Person with this name
      */
     private boolean hasPersonWithName(String name) {
         for (Person p : personPerDocument) {
@@ -167,7 +169,7 @@ public class NameExtractor {
 
     /**
      * Checks if a token is recognized with a whitelist.
-     * If yes, add a new Person with the following String as a person.
+     * If yes, add a new ch.fhnw.coin.coolpeople.Person with the following String as a person.
      *
      * @param tokens Token Array, basically splitted sentences
      */

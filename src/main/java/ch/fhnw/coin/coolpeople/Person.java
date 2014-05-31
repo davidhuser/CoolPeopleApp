@@ -1,3 +1,5 @@
+package ch.fhnw.coin.coolpeople;
+
 public class Person {
     private String prename, lastname;
 

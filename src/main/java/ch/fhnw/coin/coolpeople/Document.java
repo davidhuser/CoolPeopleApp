@@ -1,3 +1,5 @@
+package ch.fhnw.coin.coolpeople;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;

@@ -1,3 +1,5 @@
+package ch.fhnw.coin.coolpeople;
+
 import java.io.IOException;
 
 public class Main {

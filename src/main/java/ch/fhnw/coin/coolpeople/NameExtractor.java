@@ -18,11 +18,10 @@ import java.util.ArrayList;
  * @author      Igor Bosnjak
  * @author      David Huser
  */
-public class NameExtractor {
+class NameExtractor {
 
-    private static final String BASE_DIR = "/Users/david/Desktop/";
 
-    private ArrayList<Person> personPerDocument = new ArrayList<Person>();
+    private final ArrayList<Person> personPerDocument = new ArrayList<Person>();
 
     public NameExtractor(Document doc) {
         try {
@@ -44,15 +43,15 @@ public class NameExtractor {
         System.out.println("EXTRACTING NAMES...\n");
         InputStream is1 = null, is2 = null, is3 = null;
         try {
-            is1 = new FileInputStream(BASE_DIR + "en-token.bin");
+            is1 = getClass().getResourceAsStream("/en-token.bin");
             TokenizerModel tModel = new TokenizerModel(is1);
             Tokenizer tokenizer = new TokenizerME(tModel);
 
-            is2 = new FileInputStream(BASE_DIR + "en-sent.bin");
+            is2 = getClass().getResourceAsStream("/en-sent.bin");
             SentenceModel sModel = new SentenceModel(is2);
             SentenceDetectorME sentenceDetector = new SentenceDetectorME(sModel);
 
-            is3 = new FileInputStream(BASE_DIR + "en-ner-person.bin");
+            is3 = getClass().getResourceAsStream("/en-ner-person.bin");
             TokenNameFinderModel nModel = new TokenNameFinderModel(is3);
 
             NameFinderME nameFinder = new NameFinderME(nModel);
@@ -173,11 +172,10 @@ public class NameExtractor {
      *
      * @param tokens Token Array, basically splitted sentences
      */
-    private void checkAgainstList(String[] tokens) throws IOException {
+    private void checkAgainstList(String[] tokens) {
         BufferedReader bufReader = null;
-
         try {
-            bufReader = new BufferedReader(new FileReader(BASE_DIR + "person_first_name.lst"));
+            bufReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/person_first_name.lst")));
 
             String line;
             Person person;

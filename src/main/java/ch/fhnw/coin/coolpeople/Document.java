@@ -6,9 +6,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 
-public class Document {
+class Document {
 
-    private String filename;
+    private final String filename;
     private String content;
 
     public Document(String name) throws IOException {

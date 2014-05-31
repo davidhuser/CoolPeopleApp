@@ -1,7 +1,8 @@
 package ch.fhnw.coin.coolpeople;
 
-public class Person {
-    private String prename, lastname;
+class Person {
+    private final String prename;
+    private final String lastname;
 
     public Person(String prename, String lastname) {
         this.prename = prename;

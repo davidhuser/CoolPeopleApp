@@ -6,15 +6,15 @@ import java.util.ArrayList;
 class Main {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("SYSTEM STARTED.");
+        System.out.println("SYSTEM STARTED.\n");
 
         ArrayList<ArrayList<Person>> graph = new ArrayList<ArrayList<Person>>();
 
         try {
-            Document doc1 = new Document(Constants.BASE_DIR + "inputtext_eng.txt");
+            Document doc1 = new Document(Config.TXT1);
             NameExtractor nex1 = new NameExtractor(doc1);
 
-            Document doc2 = new Document(Constants.BASE_DIR + "inputtext_eng2.txt");
+            Document doc2 = new Document(Config.TXT2);
             NameExtractor nex2 = new NameExtractor(doc2);
 
             graph.add(nex1.returnPersonArray());
@@ -25,7 +25,7 @@ class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("\n\nFINISHED.");
+        System.out.println("\nFINISHED.");
 
     }
 }

@@ -1,10 +1,6 @@
 package ch.fhnw.coin.coolpeople;
 
-import it.uniroma1.dis.wsngroup.gexf4j.core.EdgeType;
-import it.uniroma1.dis.wsngroup.gexf4j.core.Gexf;
-import it.uniroma1.dis.wsngroup.gexf4j.core.Graph;
-import it.uniroma1.dis.wsngroup.gexf4j.core.Mode;
-import it.uniroma1.dis.wsngroup.gexf4j.core.Node;
+import it.uniroma1.dis.wsngroup.gexf4j.core.*;
 import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeClass;
 import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeList;
 import it.uniroma1.dis.wsngroup.gexf4j.core.impl.GexfImpl;
@@ -22,12 +18,12 @@ class GraphManager {
 
     private final ArrayList<ArrayList<Person>> graph;
 
-    public GraphManager(ArrayList<ArrayList<Person>> al){
+    public GraphManager(ArrayList<ArrayList<Person>> al) {
         this.graph = al;
         initGraph(graph);
     }
 
-    private void initGraph(ArrayList<ArrayList<Person>> al){
+    private void initGraph(ArrayList<ArrayList<Person>> al) {
 
         Gexf gexf = new GexfImpl();
         Calendar date = Calendar.getInstance();
@@ -44,27 +40,38 @@ class GraphManager {
         AttributeList attrList = new AttributeListImpl(AttributeClass.NODE);
         graph.getAttributeLists().add(attrList);
 
+        //TODO links created nodes to edges depending on source document
         int counter = 0;
-        for(ArrayList<Person> innerList : al) {
-            for(Person p : innerList) {
-                Node gephi = graph.createNode(Integer.toString(counter));
-                gephi
-                        .setLabel(p.toString());
+        ArrayList<Node> nodeList = new ArrayList<Node>();
+        for (ArrayList<Person> innerList : al) {
+            for (Person p : innerList) {
+                Node node = graph.createNode(Integer.toString(counter));
+                node.setLabel(p.toString());
+                nodeList.add(node);
+                connectNodeToAll(nodeList, node);
                 counter++;
-
             }
         }
 
         StaxGraphWriter graphWriter = new StaxGraphWriter();
-        File f = new File(Constants.BASE_DIR + "static_graph_sample.gexf");
+        File f = new File(Config.OUTPUTFILE);
         Writer out;
         try {
-            out =  new FileWriter(f, false);
+            out = new FileWriter(f, false);
             graphWriter.writeToStream(gexf, out, "UTF-8");
+            System.out.println("GRAPH FILE CREATED AT:");
             System.out.println(f.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void connectNodeToAll(ArrayList<Node> list, Node node){
+        int counter = 0;
+        for(Node p: list){
+            counter++;
+            node.connectTo(Integer.toString(counter), p);
+        }
     }
 }

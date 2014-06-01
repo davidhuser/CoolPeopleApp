@@ -7,7 +7,7 @@ class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("SYSTEM STARTED.\n");
-
+        new Window().setVisible(true);
         ArrayList<ArrayList<Person>> graph = new ArrayList<ArrayList<Person>>();
 
         try {

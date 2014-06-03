@@ -27,21 +27,21 @@ class Main {
                 .setDescription("Document_Network");
         gexf.setVisualization(true);
 
-        Graph g = gexf.getGraph();
-        g.setDefaultEdgeType(EdgeType.UNDIRECTED).setMode(Mode.STATIC);
+        Graph graph = gexf.getGraph();
+        graph.setDefaultEdgeType(EdgeType.UNDIRECTED).setMode(Mode.STATIC);
 
         AttributeList attrList = new AttributeListImpl(AttributeClass.NODE);
-        g.getAttributeLists().add(attrList);
+        graph.getAttributeLists().add(attrList);
 
         //read inputfiles, create documents from it, extracts names, add names to nodeList
         try {
             for(String path : Config.INPUT){
                 Document doc = new Document(path);
-                NameExtractor nex = new NameExtractor(doc, g);
+                NameExtractor nex = new NameExtractor(doc, graph);
                 nodeList.add(nex.castPersonsToNodes(nex.returnPersonArray()));
             }
             //instanciate graphmanager with the nodelist, the graph and a GEXF object
-            GraphManager gm = new GraphManager(nodeList, g, gexf);
+            GraphManager gm = new GraphManager(nodeList, graph, gexf);
 
         } catch (IOException e) {
             e.printStackTrace();

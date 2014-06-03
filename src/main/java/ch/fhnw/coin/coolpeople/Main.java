@@ -1,31 +1,51 @@
 package ch.fhnw.coin.coolpeople;
 
+import it.uniroma1.dis.wsngroup.gexf4j.core.*;
+import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeClass;
+import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeList;
+import it.uniroma1.dis.wsngroup.gexf4j.core.impl.GexfImpl;
+import it.uniroma1.dis.wsngroup.gexf4j.core.impl.data.AttributeListImpl;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("SYSTEM STARTED.\n");
         new Window().setVisible(true);
-        ArrayList<ArrayList<Person>> graph = new ArrayList<ArrayList<Person>>();
+        ArrayList<ArrayList<Node>> nodeList = new ArrayList<ArrayList<Node>>();
 
+        //initialize GEXF4J Graph
+        Gexf gexf = new GexfImpl();
+        Calendar date = Calendar.getInstance();
+
+        gexf.getMetadata()
+                .setLastModified(date.getTime())
+                .setCreator("CoolPeopleApp")
+                .setDescription("Document_Network");
+        gexf.setVisualization(true);
+
+        Graph g = gexf.getGraph();
+        g.setDefaultEdgeType(EdgeType.UNDIRECTED).setMode(Mode.STATIC);
+
+        AttributeList attrList = new AttributeListImpl(AttributeClass.NODE);
+        g.getAttributeLists().add(attrList);
+
+        //read inputfiles, create documents from it, extracts names, add names to nodeList
         try {
-            Document doc1 = new Document(Config.TXT1);
-            NameExtractor nex1 = new NameExtractor(doc1);
-
-            Document doc2 = new Document(Config.TXT2);
-            NameExtractor nex2 = new NameExtractor(doc2);
-
-            graph.add(nex1.returnPersonArray());
-            graph.add(nex2.returnPersonArray());
-
-            GraphManager gm = new GraphManager(graph);
+            for(String path : Config.INPUT){
+                Document doc = new Document(path);
+                NameExtractor nex = new NameExtractor(doc, g);
+                nodeList.add(nex.castPersonsToNodes(nex.returnPersonArray()));
+            }
+            //instanciate graphmanager with the nodelist, the graph and a GEXF object
+            GraphManager gm = new GraphManager(nodeList, g, gexf);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("\nFINISHED.");
-
     }
 }

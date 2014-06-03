@@ -5,24 +5,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-public class Window extends JFrame {
+class Window extends JFrame {
     SortedSet<Object> model;
-    private JPanel panel = new JPanel();
-    private JLabel deletedNames = new JLabel("deleted names");
-    private JLabel integratedNames = new JLabel("integrated names");
+    private final JLabel deletedNames = new JLabel("deleted names");
+    private final JLabel integratedNames = new JLabel("integrated names");
     //Java 7 has no generics for JList (no new JList<String>();)
-    private JList deletedNamesArea = new JList();
-    private JList integratedNamesArea = new JList();
-    private JButton addName = new JButton( "add name" );
-    private JButton deleteName = new JButton( "delete name" );
+    private final JList deletedNamesArea = new JList();
+    private final JList integratedNamesArea = new JList();
+    private final JButton addName = new JButton( "add name" );
+    private final JButton deleteName = new JButton( "delete name" );
 
     public Window() {
         //model = new TreeSet<Object>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setSize(450,300);
+        panel.setSize(450, 300);
         panel.setName("CoolPeople");
         //JFrame myFrame = new JFrame("CoolPeople");
         panel.add(getEastPanel(), BorderLayout.EAST);
@@ -33,7 +33,7 @@ public class Window extends JFrame {
         pack();
     }
 
-    protected JComponent getCenterPanel() {
+    JComponent getCenterPanel() {
         JPanel inner = new JPanel();
         inner.setLayout(new GridLayout(2, 1, 10, 0));
         inner.add(deleteName);
@@ -41,7 +41,7 @@ public class Window extends JFrame {
         return inner;
     }
 
-    protected JComponent getWestPanel() {
+    JComponent getWestPanel() {
         JPanel inner = new JPanel();
         inner.setLayout(new GridLayout(2, 1, 40, 0));
         inner.add(deletedNames);
@@ -49,7 +49,7 @@ public class Window extends JFrame {
         return inner;
     }
 
-    protected JComponent getEastPanel() {
+    JComponent getEastPanel() {
         JPanel inner = new JPanel();
         inner.setLayout(new GridLayout(2, 1, 40, 0));
         inner.add(integratedNames);

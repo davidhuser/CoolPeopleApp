@@ -1,10 +1,6 @@
 package ch.fhnw.coin.coolpeople;
 
 import it.uniroma1.dis.wsngroup.gexf4j.core.*;
-import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeClass;
-import it.uniroma1.dis.wsngroup.gexf4j.core.data.AttributeList;
-import it.uniroma1.dis.wsngroup.gexf4j.core.impl.GexfImpl;
-import it.uniroma1.dis.wsngroup.gexf4j.core.impl.data.AttributeListImpl;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -16,7 +12,6 @@ import opennlp.tools.util.Span;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * ch.fhnw.coin.coolpeople.NameExtractor is the class which tries to extract Names with two different approaches from an input String.

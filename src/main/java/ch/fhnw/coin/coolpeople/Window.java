@@ -5,16 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-/**
- * Created by igorbosnjak on 27.05.14.
- */
 public class Window extends JFrame {
     SortedSet<Object> model;
     private JPanel panel = new JPanel();
     private JLabel deletedNames = new JLabel("deleted names");
     private JLabel integratedNames = new JLabel("integrated names");
-    private JList deletedNamesArea = new JList<String>();
-    private JList integratedNamesArea = new JList<String>();
+    //Java 7 has no generics for JList (no new JList<String>();)
+    private JList deletedNamesArea = new JList();
+    private JList integratedNamesArea = new JList();
     private JButton addName = new JButton( "add name" );
     private JButton deleteName = new JButton( "delete name" );
 

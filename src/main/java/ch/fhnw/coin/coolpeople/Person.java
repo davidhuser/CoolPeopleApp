@@ -21,4 +21,24 @@ class Person {
     public String toString() {
         return (this.getPrename() + " " + this.getLastname());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (!lastname.equals(person.lastname)) return false;
+        if (!prename.equals(person.prename)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = prename.hashCode();
+        result = 31 * result + lastname.hashCode();
+        return result;
+    }
 }

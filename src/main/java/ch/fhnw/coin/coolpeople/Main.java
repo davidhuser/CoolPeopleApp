@@ -9,13 +9,17 @@ import it.uniroma1.dis.wsngroup.gexf4j.core.impl.data.AttributeListImpl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("SYSTEM STARTED.\n");
         new Window().setVisible(true);
+        ArrayList<ArrayList<Person>> personlist = new ArrayList<ArrayList<Person>>();
         ArrayList<ArrayList<Node>> nodeList = new ArrayList<ArrayList<Node>>();
+        HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
+
 
         //initialize GEXF4J Graph
         Gexf gexf = new GexfImpl();
@@ -38,10 +42,15 @@ class Main {
             for(String path : Config.INPUT){
                 Document doc = new Document(path);
                 NameExtractor nex = new NameExtractor(doc, graph);
-                nodeList.add(nex.castPersonsToNodes(nex.returnPersonArray()));
+                ArrayList<Person> templist = nex.returnPersonArray();
+
+                System.out.println(nex.returnPersonArray());
+                personlist.add(templist);
+                nodeList.add(nex.castPersonsToNodes(templist));
+                nodemap.putAll(nex.getNodemap());
             }
             //instanciate graphmanager with the nodelist, the graph and a GEXF object
-            GraphManager gm = new GraphManager(nodeList, graph, gexf);
+            GraphManager gm = new GraphManager(nodemap, personlist, graph, gexf);
 
         } catch (IOException e) {
             e.printStackTrace();

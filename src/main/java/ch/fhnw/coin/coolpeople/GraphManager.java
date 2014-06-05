@@ -9,21 +9,26 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 class GraphManager {
+    private final HashMap<Person, Node> nm;
+    private int counter = 0;
 
-    public GraphManager(ArrayList<ArrayList<Node>> al, Graph graph, Gexf gexf) {
-        ArrayList<ArrayList<Node>> nodelist = al;
+    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Graph graph, Gexf gexf) {
+        this.nm = nm;
         Graph g = graph;
         Gexf gx = gexf;
-        initGraph(al, g, gx);
+        initGraph(pl, g, gx);
     }
 
-    private void initGraph(ArrayList<ArrayList<Node>> al, Graph g, Gexf gx) {
+    private void initGraph(ArrayList<ArrayList<Person>> pl, Graph g, Gexf gx) {
 
-        //TODO create edges between nodes...
-        //https://github.com/francesco-ficarola/gexf4j/blob/master/src/examples/java/it/uniroma1/dis/wsngroup/gexf4j/examples/StaticGexfGraph.java
+        for(ArrayList<Person> al : pl){
+            connectNodeToAll(al);
+        }
 
         StaxGraphWriter graphWriter = new StaxGraphWriter();
         File f = new File(Config.OUTPUTFILE);
@@ -37,11 +42,20 @@ class GraphManager {
         }
     }
 
-    private void connectNodeToAll(ArrayList<Node> list, Node node) {
-        int counter = 0;
-        for (Node p : list) {
-            counter++;
-            node.connectTo(Integer.toString(counter), p);
+    private void connectNodeToAll(ArrayList<Person> list) {
+
+        for(int i=0; i<list.size()-1; i++){
+            for(int j=i+1; j<list.size(); j++){
+                Node from = nm.get(list.get(i));
+                Node to = nm.get(list.get(j));
+                if(from == null || to == null){
+                    System.out.println("nulll  " + counter);
+                }
+                if(!from.hasEdgeTo(Integer.toString(list.get(j).hashCode()))) {
+                    from.connectTo(Integer.toString(counter), to);
+                }
+                counter++;
+            }
         }
     }
 }

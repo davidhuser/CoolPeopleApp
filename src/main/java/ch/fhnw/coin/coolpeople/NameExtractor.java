@@ -12,6 +12,7 @@ import opennlp.tools.util.Span;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ch.fhnw.coin.coolpeople.NameExtractor is the class which tries to extract Names with two different approaches from an input String.
@@ -25,6 +26,7 @@ class NameExtractor {
     private final ArrayList<Person> personPerDocument = new ArrayList<Person>();
     private final ArrayList<Node> nodePerDocument = new ArrayList<Node>();
     private static Graph graph;
+    private final HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
 
     public NameExtractor(Document doc, Graph g) {
         graph = g;
@@ -142,12 +144,20 @@ class NameExtractor {
         return personPerDocument;
     }
 
+    public HashMap<Person, Node> getNodemap() {
+        return nodemap;
+    }
+
     public ArrayList<Node> castPersonsToNodes(ArrayList<Person> al) {
 
         int cnt = 0;
         for(Person p : al){
-            Node node = graph.createNode(Integer.toString(cnt));
-            node.setLabel(p.getPrename() + " " + p.getLastname());
+            Node node = nodemap.get(p);
+            if(node == null){
+                node = graph.createNode(Integer.toString(p.hashCode()));
+                node.setLabel(p.getPrename() + " " + p.getLastname());
+                nodemap.put(p, node);
+            }
             nodePerDocument.add(node);
         }
 

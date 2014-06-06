@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 class Main {
+    public static ArrayList<Person> templist;
 
     public static void main(String[] args) throws IOException {
         System.out.println("SYSTEM STARTED.\n");
@@ -19,6 +20,7 @@ class Main {
         ArrayList<ArrayList<Person>> personlist = new ArrayList<ArrayList<Person>>();
         ArrayList<ArrayList<Node>> nodeList = new ArrayList<ArrayList<Node>>();
         HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
+
 
 
         //initialize GEXF4J Graph
@@ -42,7 +44,7 @@ class Main {
             for(String path : Config.INPUT){
                 Document doc = new Document(path);
                 NameExtractor nex = new NameExtractor(doc, graph);
-                ArrayList<Person> templist = nex.returnPersonArray();
+                templist = nex.returnPersonArray();
 
                 System.out.println(nex.returnPersonArray());
                 personlist.add(templist);

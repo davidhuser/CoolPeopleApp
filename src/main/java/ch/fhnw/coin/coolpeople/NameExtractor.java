@@ -1,6 +1,7 @@
 package ch.fhnw.coin.coolpeople;
 
-import it.uniroma1.dis.wsngroup.gexf4j.core.*;
+import it.uniroma1.dis.wsngroup.gexf4j.core.Graph;
+import it.uniroma1.dis.wsngroup.gexf4j.core.Node;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.namefind.TokenNameFinderModel;
 import opennlp.tools.sentdetect.SentenceDetectorME;
@@ -10,17 +11,20 @@ import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * ch.fhnw.coin.coolpeople.NameExtractor is the class which tries to extract Names with two different approaches from an input String.
  *
- * @author      Igor Bosnjak
- * @author      David Huser
+ * @author Igor Bosnjak
+ * @author David Huser
  */
-class NameExtractor {
+public class NameExtractor {
 
 
     private final ArrayList<Person> personPerDocument = new ArrayList<Person>();
@@ -150,10 +154,9 @@ class NameExtractor {
 
     public ArrayList<Node> castPersonsToNodes(ArrayList<Person> al) {
 
-        int cnt = 0;
-        for(Person p : al){
+        for (Person p : al) {
             Node node = nodemap.get(p);
-            if(node == null){
+            if (node == null) {
                 node = graph.createNode(Integer.toString(p.hashCode()));
                 node.setLabel(p.getPrename() + " " + p.getLastname());
                 nodemap.put(p, node);
@@ -211,7 +214,7 @@ class NameExtractor {
                     //check if token is in list
                     if (tokens[i].equalsIgnoreCase(line)) {
                         //check if token and the following token are Uppercase
-                        if(Character.isUpperCase(tokens[i].charAt(0)) & Character.isUpperCase(tokens[i + 1].charAt(0))) {
+                        if (Character.isUpperCase(tokens[i].charAt(0)) & Character.isUpperCase(tokens[i + 1].charAt(0))) {
                             //add token and the following token as a new person
                             person = new Person(tokens[i], tokens[i + 1]);
                             if (!isInPersonList(person)) {

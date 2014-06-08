@@ -1,6 +1,6 @@
 package ch.fhnw.coin.coolpeople;
 
-class Person {
+public class Person {
     private final String prename;
     private final String lastname;
 

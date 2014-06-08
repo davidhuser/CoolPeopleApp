@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 
-class Document {
+public class Document {
 
     private final String filename;
     private String content;
@@ -31,7 +31,7 @@ class Document {
         content = new String(bb.array());
     }
 
-    public String getContent(){
+    public String getContent() {
         return content;
     }
 }

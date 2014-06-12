@@ -16,7 +16,8 @@ class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("SYSTEM STARTED.\n");
-        new Window().setVisible(true);
+        Window w = new Window();
+        w.setVisible(true);
         ArrayList<ArrayList<Person>> personlist = new ArrayList<ArrayList<Person>>();
         ArrayList<ArrayList<Node>> nodeList = new ArrayList<ArrayList<Node>>();
         HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
@@ -45,7 +46,7 @@ class Main {
                 Document doc = new Document(path);
                 NameExtractor nex = new NameExtractor(doc, graph);
                 templist = nex.returnPersonArray();
-
+                w.integratedpersonList(templist);
                 System.out.println(nex.returnPersonArray());
                 personlist.add(templist);
                 nodeList.add(nex.castPersonsToNodes(templist));

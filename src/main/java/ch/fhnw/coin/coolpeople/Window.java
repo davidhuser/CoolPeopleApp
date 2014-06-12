@@ -3,6 +3,8 @@ package ch.fhnw.coin.coolpeople;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 class Window extends JFrame {
@@ -10,12 +12,14 @@ class Window extends JFrame {
     private final JLabel deletedNames = new JLabel("deleted names");
     private final JLabel integratedNames = new JLabel("integrated names");
     //Java 7 has no generics for JList (no new JList<String>();)
+    private DefaultListModel<Person> deletedModel = new DefaultListModel<Person>();
     private final JList deletedNamesArea = new JList();
-    private final JList integratedNamesArea = new JList();
+    private DefaultListModel<Person> integratedModel = new DefaultListModel<Person>();
+    private final JList integratedNamesArea = new JList(integratedModel);
     private final JButton addName = new JButton( "add name" );
     private final JButton deleteName = new JButton( "delete name" );
     private JButton createNetwork = new JButton("save");
-    Person[] personsInList = nameList.toArray(new Person[0]);
+    //Person[] personsInList = nameList.toArray(new Person[0]);
 
     public Window() {
         //model = new TreeSet<Object>();
@@ -27,7 +31,7 @@ class Window extends JFrame {
         //String[] personNameList = personsInList.toString();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setSize(600, 400);
+        panel.setSize(800, 450);
         panel.setName("CoolPeople");
         //JFrame myFrame = new JFrame("CoolPeople");
         panel.add(getEastPanel(), BorderLayout.EAST);
@@ -44,6 +48,7 @@ class Window extends JFrame {
         inner.setLayout(new GridLayout(2, 1, 10, 0));
         inner.add(deleteName);
         inner.add(addName);
+        deleteName.addActionListener(deleteListener);
         return inner;
     }
 
@@ -69,6 +74,28 @@ class Window extends JFrame {
         inner.add(createNetwork);
         return inner;
     }
+
+    public void integratedpersonList(ArrayList<Person> list){
+        for(int i = 0; i<list.size(); i++){
+            integratedModel.addElement(list.get(i));
+        }
+    }
+
+    public void deletedpersonList(ArrayList<Person> list) {
+        for(int i= 0; i<list.size(); i++) {
+            Person p = integratedModel.getElementAt(integratedNamesArea.getSelectedIndex());
+        }
+    }
+
+    public ActionListener deleteListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(integratedNamesArea.getSelectedIndex() < 0) return;
+            Person p = integratedModel.getElementAt(integratedNamesArea.getSelectedIndex());
+            deletedModel.setElementAt(p,0);
+            integratedModel.remove(integratedNamesArea.getSelectedIndex());
+        }
+    };
 
     /*
     public int getSize() {

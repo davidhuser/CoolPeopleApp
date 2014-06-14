@@ -16,13 +16,13 @@ class Window extends JFrame {
     private final JList deletedNamesArea = new JList();
     private DefaultListModel<Person> integratedModel = new DefaultListModel<Person>();
     private final JList integratedNamesArea = new JList(integratedModel);
-    private final JButton addName = new JButton( "add name" );
-    private final JButton deleteName = new JButton( "delete name" );
+    private final JButton addName = new JButton( "->" );
+    private final JButton deleteName = new JButton( "<-" );
     private JButton createNetwork = new JButton("save");
     //Person[] personsInList = nameList.toArray(new Person[0]);
 
     public Window() {
-        //model = new TreeSet<Object>();
+        super("CoolPeople");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -31,7 +31,7 @@ class Window extends JFrame {
         //String[] personNameList = personsInList.toString();
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
-        panel.setSize(800, 450);
+        panel.setSize(1000, 600);
         panel.setName("CoolPeople");
         //JFrame myFrame = new JFrame("CoolPeople");
         panel.add(getEastPanel(), BorderLayout.EAST);

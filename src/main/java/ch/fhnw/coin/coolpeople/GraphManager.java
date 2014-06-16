@@ -52,7 +52,7 @@ class GraphManager {
         try {
             out = new FileWriter(f, false);
             graphWriter.writeToStream(gx, out, "UTF-8");
-            System.out.println(f.getAbsolutePath());
+            System.out.println("GENERATING GRAPH FILE AT: " + f.getAbsolutePath());
         } catch (IOException e) {
             e.printStackTrace();
         }

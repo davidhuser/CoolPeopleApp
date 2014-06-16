@@ -32,7 +32,7 @@ public class Document {
      *
      */
     private void readContent() throws IOException {
-        System.out.println("READING RESOURCE...");
+        System.out.println("READING RESOURCE: " + filename);
         // Create an input stream and file channel
         FileInputStream fis = new FileInputStream(filename);
         FileChannel fc = fis.getChannel();

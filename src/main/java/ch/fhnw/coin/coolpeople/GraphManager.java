@@ -12,18 +12,35 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Class to create the gexf extension from the underlying data structure(s)
+ *
+ * @author Igor Bosnjak
+ * @author David Huser
+ */
 class GraphManager {
     private final HashMap<Person, Node> nm;
     private int counter = 0;
 
-    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Graph graph, Gexf gexf) {
+    /**
+     * Constructor for GraphManager
+     *
+     * @param nm HashMap<Person, Node>
+     * @param pl ArrayList<ArrayList<Person>>
+     * @param gexf Gexf
+     */
+    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Gexf gexf) {
         this.nm = nm;
-        Graph g = graph;
         Gexf gx = gexf;
-        initGraph(pl, g, gx);
+        initGraph(pl, gx);
     }
 
-    private void initGraph(ArrayList<ArrayList<Person>> pl, Graph g, Gexf gx) {
+    /**
+     * Initialize graph
+     *
+     * @return String the actual string read from the file
+     */
+    private void initGraph(ArrayList<ArrayList<Person>> pl, Gexf gx) {
 
         for (ArrayList<Person> al : pl) {
             connectAllToAll(al);

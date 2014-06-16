@@ -19,33 +19,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * ch.fhnw.coin.coolpeople.NameExtractor is the class which tries to extract Names with two different approaches from an input String.
+ * NameExtractor is the class which tries to extract Names with two different approaches from an input String.
  *
  * @author Igor Bosnjak
  * @author David Huser
  */
 public class NameExtractor {
 
-
     private final ArrayList<Person> personPerDocument = new ArrayList<Person>();
     private final ArrayList<Node> nodePerDocument = new ArrayList<Node>();
     private static Graph graph;
     private final HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
 
+    /**
+     * Constructor for NameExtractor
+     *
+     * @param doc Document
+     * @param g Graph
+     */
     public NameExtractor(Document doc, Graph g) {
         graph = g;
         try {
-            String docContent = doc.getContent();
-            extractNames(docContent);
+            extractNames(doc.getContent());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Extracts names with Apache openNLP
-     * <code>https://opennlp.apache.org/</code>
-     * <code>http://opennlp.sourceforge.net/models-1.5/</code>
+     * Extracts names with Apache openNLP models and list of prenames
+     *
      *
      * @param documentStr The String to extract names
      */
@@ -141,17 +144,30 @@ public class NameExtractor {
     /**
      * Getter method for ArrayList personPerDocument
      *
-     * @return ArrayList<ch.fhnw.coin.coolpeople.Person> The ch.fhnw.coin.coolpeople.Person Data Structure
-     * @see class ch.fhnw.coin.coolpeople.Person
+     * @return ArrayList<Person> The Person data structure
+     * @see class Person
      */
     public ArrayList<Person> returnPersonArray() {
         return personPerDocument;
     }
 
+    /**
+     * Getter method for HashMap of Persons and casted Nodes of Persons
+     *
+     *
+     * @return HashMap<Person, Node> Map of Person to Nodes
+     */
     public HashMap<Person, Node> getNodemap() {
         return nodemap;
     }
 
+    /**
+     * Cast Persons to Nodes to be more compatbile with GEXF library and initialize nodes with attributes.
+     * Hashcode of the Map is used as UUID.
+     *
+     * @param al ArrayList<Person> ArrayList of Persons
+     * @return ArrayList<Node> ArrayList of casted Nodes
+     */
     public ArrayList<Node> castPersonsToNodes(ArrayList<Person> al) {
 
         for (Person p : al) {
@@ -168,9 +184,9 @@ public class NameExtractor {
     }
 
     /**
-     * Checks if a persons already exists in the PersonsList.
+     * Checks if a Person already exists in the PersonsList.
      *
-     * @param p ch.fhnw.coin.coolpeople.Person to check
+     * @param p Person to check if already in personlist
      * @return boolean
      */
     private boolean isInPersonList(Person p) {
@@ -183,9 +199,10 @@ public class NameExtractor {
     }
 
     /**
-     * Tries to find a ch.fhnw.coin.coolpeople.Person with 'name' in its prename or lastname
+     * Tries to find a Person with 'name' in its prename or lastname
      *
      * @param name to find a ch.fhnw.coin.coolpeople.Person with this name
+     * @return boolean
      */
     private boolean hasPersonWithName(String name) {
         for (Person p : personPerDocument) {
@@ -196,10 +213,10 @@ public class NameExtractor {
     }
 
     /**
-     * Checks if a token is recognized with a whitelist.
-     * If yes, add a new ch.fhnw.coin.coolpeople.Person with the following String as a person.
+     * Checks if a token is recognized within a whitelist.
+     * If yes, add a new Person with the following String as a person.
      *
-     * @param tokens Token Array, basically splitted sentences
+     * @param tokens Token Array, basically splitted sentences of input String
      */
     private void checkAgainstList(String[] tokens) {
         BufferedReader bufReader = null;
@@ -235,5 +252,4 @@ public class NameExtractor {
         }
 
     }
-
 }

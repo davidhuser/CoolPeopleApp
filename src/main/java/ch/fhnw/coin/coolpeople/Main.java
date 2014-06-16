@@ -22,9 +22,7 @@ class Main {
         ArrayList<ArrayList<Node>> nodeList = new ArrayList<ArrayList<Node>>();
         HashMap<Person, Node> nodemap = new HashMap<Person, Node>();
 
-
-
-        //initialize GEXF4J Graph
+        //initialize undirected GEXF4J graph
         Gexf gexf = new GexfImpl();
         Calendar date = Calendar.getInstance();
 
@@ -40,20 +38,30 @@ class Main {
         AttributeList attrList = new AttributeListImpl(AttributeClass.NODE);
         graph.getAttributeLists().add(attrList);
 
-        //read inputfiles, create documents from it, extracts names, add names to nodeList
+        //read all inputfiles, create documents from it, extracts names, add names to nodeList
         try {
             for(String path : Config.INPUT){
+                //create Document object
                 Document doc = new Document(path);
+
+                //extract names
                 NameExtractor nex = new NameExtractor(doc, graph);
+
+                //get list for filtering with GUI
                 templist = nex.returnPersonArray();
                 w.integratedpersonList(templist);
-                System.out.println(nex.returnPersonArray());
+
+                //add to personlist of all documents
                 personlist.add(templist);
+
+                //cast person list to node list, which is compatible with GEXF library
                 nodeList.add(nex.castPersonsToNodes(templist));
+
+                //put all nodes in a HashMap of Person to Node
                 nodemap.putAll(nex.getNodemap());
             }
-            //instanciate graphmanager with the nodelist, the graph and a GEXF object
-            GraphManager gm = new GraphManager(nodemap, personlist, graph, gexf);
+            //instanciate graphmanager with the nodelists and a GEXF object
+            GraphManager gm = new GraphManager(nodemap, personlist, gexf);
 
         } catch (IOException e) {
             e.printStackTrace();

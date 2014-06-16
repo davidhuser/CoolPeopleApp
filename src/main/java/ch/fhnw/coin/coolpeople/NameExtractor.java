@@ -231,7 +231,7 @@ public class NameExtractor {
                     //check if token is in list
                     if (tokens[i].equalsIgnoreCase(line)) {
                         //check if token and the following token are Uppercase
-                        if (Character.isUpperCase(tokens[i].charAt(0)) & Character.isUpperCase(tokens[i].charAt(0))) {
+                        if (Character.isUpperCase(tokens[i].charAt(0)) & Character.isUpperCase(tokens[i + 1].charAt(0))) {
                             //add token and the following token as a new person
                             person = new Person(tokens[i], tokens[i + 1]);
                             if (!isInPersonList(person)) {

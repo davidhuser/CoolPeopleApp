@@ -21,6 +21,8 @@ import java.util.HashMap;
 class GraphManager {
     private final HashMap<Person, Node> nm;
     private int counter = 0;
+    String outputfile;
+
 
     /**
      * Constructor for GraphManager
@@ -29,10 +31,11 @@ class GraphManager {
      * @param pl ArrayList<ArrayList<Person>>
      * @param gexf Gexf
      */
-    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Gexf gexf) {
+    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Gexf gexf, String outputfile) {
         this.nm = nm;
         Gexf gx = gexf;
-        initGraph(pl, gx);
+        this.outputfile = outputfile;
+        initGraph(pl, gx, outputfile);
     }
 
     /**
@@ -40,14 +43,14 @@ class GraphManager {
      *
      * @return String the actual string read from the file
      */
-    private void initGraph(ArrayList<ArrayList<Person>> pl, Gexf gx) {
+    private void initGraph(ArrayList<ArrayList<Person>> pl, Gexf gx, String outputfile) {
 
         for (ArrayList<Person> al : pl) {
             connectAllToAll(al);
         }
 
         StaxGraphWriter graphWriter = new StaxGraphWriter();
-        File f = new File(Config.OUTPUTFILE);
+        File f = new File(outputfile + "/export.gexf");
         Writer out;
         try {
             out = new FileWriter(f, false);

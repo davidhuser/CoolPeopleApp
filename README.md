@@ -20,3 +20,17 @@ assemble .jar with dependencies with `mvn clean compile assembly:single`
 
 ##extending
 Since it's based reading a String, more input data types can be added later on (web-fetching, databases, ...)
+
+##Java Archive
+
+### exporting JAR for Java 6 and with Command Line Arguments
+switch branch, assemble .jar with dependencies with `mvn clean compile assembly:single`
+
+### command line arguments for JAR
+
+Example start:
+
+`java -jar CoolPeopleApp-0.1-jar-with-dependencies.jar /Users/david/Desktop/ larryellison.txt billgates.txt`
+
+* First argument is the output folder of the output gexf file
+* All other arguments are text files

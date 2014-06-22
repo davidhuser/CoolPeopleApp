@@ -22,7 +22,7 @@ assemble .jar with dependencies with `mvn clean compile assembly:single`
 Since it's based reading a String, more input data types can be added later on (web-fetching, databases, ...)
 
 ##example
-Forbes Top 10 of the richest persons [(Wikipedia)](http://en.wikipedia.org/wiki/The_World's_Billionaires#2014):
+Forbes Top 10 of the richest persons' wikipedia pages [(Wikipedia: The world's billionaires)](http://en.wikipedia.org/wiki/The_World's_Billionaires#2014):
 ![Graph](http://i.imgur.com/Zpb5YUz.png)
 
 More examples in `examples` folder.

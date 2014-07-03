@@ -34,13 +34,13 @@ public class NameExtractor {
     /**
      * Constructor for NameExtractor
      *
-     * @param doc Document
+     * @param in Input
      * @param g Graph
      */
-    public NameExtractor(Document doc, Graph g) {
+    public NameExtractor(Input in, Graph g) {
         graph = g;
         try {
-            extractNames(doc.getContent());
+            extractNames(in.getContent());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -155,7 +155,7 @@ public class NameExtractor {
      * Getter method for HashMap of Persons and casted Nodes of Persons
      *
      *
-     * @return HashMap<Person, Node> Map of Person to Nodes
+     * @return HashMap<Person,Node> Map of Person to Nodes
      */
     public HashMap<Person, Node> getNodemap() {
         return nodemap;

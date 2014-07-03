@@ -11,18 +11,22 @@ import java.util.List;
 class Config {
 
     //Path for app
-    public static final String APP_DIR = "/Users/igorbosnjak/FHNW/8. Semester/cose/Workspace/CoolPeopleApp/";
+    private static final String APP_DIR = "/Users/david/git/CoolPeopleApp/";
 
     //Project path
     public static final String PROJECT_DIR = APP_DIR + "examples/10_richest_people_2014/";
 
     //Names of input files
-    public static final List<String> INPUT = Arrays.asList(
-            PROJECT_DIR + "larryellison.txt",
-            PROJECT_DIR + "sheldonadelson.txt"
+    public static final List<String> TEXTFILES = Arrays.asList(
+
+    );
+
+    public static final List<String> URLS = Arrays.asList(
+            "https://en.wikipedia.org/wiki/Communist_Party_of_China",
+            "https://en.wikipedia.org/wiki/Xi_Jinping"
     );
 
     //Output file declaration. Keep extension: .gexf
-    public static final String OUTPUTFILE = "/Users/igorbosnjak/Desktop/CoolPeopleApp_export.gexf";
+    public static final String OUTPUTFILE = "/Users/david/Desktop/CoolPeopleApp_export.gexf";
 
 }

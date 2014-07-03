@@ -10,30 +10,10 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static ArrayList<Person> templist;
+    private static ArrayList<Person> templist;
+    private static ArrayList<Person> tempwikilist;
 
     public static void main(String[] args) throws IOException {
-        String outputfile = "not set";
-        ArrayList<String> inputfiles = new ArrayList<String>();
-
-        if (args.length == 0) {
-
-        }
-
-        int length = args.length;
-        if (length <= 0) {
-            System.out.println("no arguments were given. First argument: export folder path, " +
-                    "all other following arguments: path to text files");
-        }
-        for (int i = 0; i < length; i++) {
-            if(args[i] == args[0]) {
-                outputfile = args[0];
-            }else{
-                inputfiles.add(args[i]);
-            }
-        }
-        System.out.println(inputfiles.toString());
-
         System.out.println("SYSTEM STARTED.\n");
         //Window w = new Window();
         //w.setVisible(true);
@@ -58,34 +38,46 @@ public class Main {
         AttributeList attrList = new AttributeListImpl(AttributeClass.NODE);
         graph.getAttributeLists().add(attrList);
 
-
-
-        System.out.println(inputfiles.toString());
-
         //read all inputfiles, create documents from it, extracts names, add names to nodeList
         try {
-            for(String path : inputfiles){
-                //create Document object
-                Document doc = new Document(path);
-                System.out.println("r:" + path);
-                //extract names
-                NameExtractor nex = new NameExtractor(doc, graph);
+            if(!Config.TEXTFILES.isEmpty()) {
+                for (String path : Config.TEXTFILES) {
+                    //create Document object
+                    Textfile doc = new Textfile(path);
+                    System.out.println("r:" + path);
+                    //extract names
+                    NameExtractor nex = new NameExtractor(doc, graph);
 
-                //get list for filtering with GUI
-                templist = nex.returnPersonArray();
-                //w.integratedpersonList(templist);
+                    //get list for filtering with GUI
+                    templist = nex.returnPersonArray();
+                    //w.integratedpersonList(templist);
 
-                //add to personlist of all documents
-                personlist.add(templist);
+                    //add to personlist of all documents
+                    personlist.add(templist);
 
-                //cast person list to node list, which is compatible with GEXF library
-                nodeList.add(nex.castPersonsToNodes(templist));
+                    //cast person list to node list, which is compatible with GEXF library
+                    nodeList.add(nex.castPersonsToNodes(templist));
 
-                //put all nodes in a HashMap of Person to Node
-                nodemap.putAll(nex.getNodemap());
+                    //put all nodes in a HashMap of Person to Node
+                    nodemap.putAll(nex.getNodemap());
+                }
+            }
+
+            else if(!Config.URLS.isEmpty()) {
+                for (String path : Config.URLS) {
+                    Wikipage page = new Wikipage(path);
+                    NameExtractor nex2 = new NameExtractor(page, graph);
+                    tempwikilist = nex2.returnPersonArray();
+                    personlist.add(tempwikilist);
+                    nodeList.add(nex2.castPersonsToNodes(tempwikilist));
+                    nodemap.putAll(nex2.getNodemap());
+
+                }
+            }else{
+                System.out.println("No input data provided in File Config.java");
             }
             //instanciate graphmanager with the nodelists and a GEXF object
-            GraphManager gm = new GraphManager(nodemap, personlist, gexf, outputfile);
+            GraphManager gm = new GraphManager(nodemap, personlist, gexf);
 
         } catch (IOException e) {
             e.printStackTrace();

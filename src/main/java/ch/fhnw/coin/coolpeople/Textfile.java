@@ -11,17 +11,16 @@ import java.nio.channels.FileChannel;
  * @author Igor Bosnjak
  * @author David Huser
  */
-public class Document {
+public class Textfile extends Input {
 
     private final String filename;
-    private String content;
 
     /**
      * Constructor for Document
      *
      * @param name String filename
      */
-    public Document(String name) throws IOException {
+    public Textfile(String name) throws IOException {
         filename = name;
         readContent();
     }
@@ -44,14 +43,5 @@ public class Document {
 
         // Convert ByteBuffer to one long String
         content = new String(bb.array());
-    }
-
-    /**
-     * File to String reader
-     *
-     * @return String the actual string read from the file
-     */
-    public String getContent() {
-        return content;
     }
 }

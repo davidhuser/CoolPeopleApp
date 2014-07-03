@@ -52,9 +52,8 @@ public class Person {
         Person person = (Person) o;
 
         if (!lastname.equals(person.lastname)) return false;
-        if (!prename.equals(person.prename)) return false;
+        return prename.equals(person.prename);
 
-        return true;
     }
 
     @Override

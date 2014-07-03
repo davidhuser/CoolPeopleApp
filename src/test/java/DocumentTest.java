@@ -31,7 +31,7 @@ public class DocumentTest {
 
     @Test
     public void testReadContent() throws IOException {
-        Assert.assertEquals(11, new Document(filename).getContent().length());
+        Assert.assertEquals(11, new Textfile(filename).getContent().length());
     }
 
 

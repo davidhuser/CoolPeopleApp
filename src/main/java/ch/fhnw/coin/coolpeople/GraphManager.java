@@ -1,7 +1,6 @@
 package ch.fhnw.coin.coolpeople;
 
 import it.uniroma1.dis.wsngroup.gexf4j.core.Gexf;
-import it.uniroma1.dis.wsngroup.gexf4j.core.Graph;
 import it.uniroma1.dis.wsngroup.gexf4j.core.Node;
 import it.uniroma1.dis.wsngroup.gexf4j.core.impl.StaxGraphWriter;
 
@@ -21,7 +20,6 @@ import java.util.HashMap;
 class GraphManager {
     private final HashMap<Person, Node> nm;
     private int counter = 0;
-    String outputfile;
 
 
     /**
@@ -31,26 +29,24 @@ class GraphManager {
      * @param pl ArrayList<ArrayList<Person>>
      * @param gexf Gexf
      */
-    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Gexf gexf, String outputfile) {
+    public GraphManager(HashMap<Person, Node> nm, ArrayList<ArrayList<Person>> pl, Gexf gexf) {
         this.nm = nm;
         Gexf gx = gexf;
-        this.outputfile = outputfile;
-        initGraph(pl, gx, outputfile);
+        initGraph(pl, gx);
     }
 
     /**
      * Initialize graph
      *
-     * @return String the actual string read from the file
      */
-    private void initGraph(ArrayList<ArrayList<Person>> pl, Gexf gx, String outputfile) {
+    private void initGraph(ArrayList<ArrayList<Person>> pl, Gexf gx) {
 
         for (ArrayList<Person> al : pl) {
             connectAllToAll(al);
         }
 
         StaxGraphWriter graphWriter = new StaxGraphWriter();
-        File f = new File(outputfile + "/export.gexf");
+        File f = new File(Config.OUTPUTFILE);
         Writer out;
         try {
             out = new FileWriter(f, false);

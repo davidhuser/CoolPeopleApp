@@ -1,4 +1,4 @@
-import ch.fhnw.coin.coolpeople.Document;
+import ch.fhnw.coin.coolpeople.Textfile;
 import ch.fhnw.coin.coolpeople.NameExtractor;
 import ch.fhnw.coin.coolpeople.Person;
 import it.uniroma1.dis.wsngroup.gexf4j.core.Gexf;
@@ -21,16 +21,9 @@ import static org.hamcrest.collection.IsArrayContaining.hasItemInArray;
 public class NameExtractorTest {
 
     private final String names = new Scanner(getClass().getResourceAsStream("/person_first_name.lst"), "UTF-8").useDelimiter("\\A").next();
-    public static NameExtractor nex;
-    public static Person p;
+    private static NameExtractor nex;
+    private static Person p;
     private File tempfile;
-    private String filecontent = "With a remarkable record of achievement, " +
-            "General Michael Henninger has been praised for creating a revolution in warfare that fused " +
-            "intelligence and operations. A four-star general, he is the former commander of U.S. and international " +
-            "forces in Afghanistan and the former leader of Joint Special Operations Command (JSOC), which " +
-            "oversees the military's most sensitive forces. Henninger's leadership of JSOC is credited with the " +
-            "December 2003 capture of Peter Gloor and the June 2006 location and killing of Michael Henninger, the " +
-            "leader of al-Qaeda in Iraq. Henninger, a former Green Beret, is known for his candor.";
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -39,9 +32,16 @@ public class NameExtractorTest {
     public void createTestData() throws IOException {
         tempfile = folder.newFile("temp.txt");
         BufferedWriter out = new BufferedWriter(new FileWriter(tempfile));
+        String filecontent = "With a remarkable record of achievement, " +
+                "General Michael Henninger has been praised for creating a revolution in warfare that fused " +
+                "intelligence and operations. A four-star general, he is the former commander of U.S. and international " +
+                "forces in Afghanistan and the former leader of Joint Special Operations Command (JSOC), which " +
+                "oversees the military's most sensitive forces. Henninger's leadership of JSOC is credited with the " +
+                "December 2003 capture of Peter Gloor and the June 2006 location and killing of Michael Henninger, the " +
+                "leader of al-Qaeda in Iraq. Henninger, a former Green Beret, is known for his candor.";
         out.write(filecontent);
         out.close();
-        Document doc = new Document(tempfile.getAbsolutePath());
+        Textfile doc = new Textfile(tempfile.getAbsolutePath());
         Gexf gexf = new GexfImpl();
         Graph graph = gexf.getGraph();
         nex = new NameExtractor(doc, graph);
